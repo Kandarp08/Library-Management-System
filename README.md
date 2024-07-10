@@ -18,7 +18,7 @@ The project contains the following directories:
 
 To setup the LMS locally, follow these instructions:
 
-1. Fork the repository to your desired folder.
+1. Fork the repository to your desired folder. Create a directory named "obj" in the root directory.
 
 2. In the init() function of src/server.c, create the credentials of the main admin.
 
