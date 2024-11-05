@@ -163,6 +163,8 @@ void send_request_to_server(int sockfd, int query_num, int user_id, char user_ty
             scanf("%[^\n]%*c", user.username);
             printf("Password: ");
             scanf("%[^\n]%*c", user.password);
+            printf("User type (admin/member): ");
+            scanf("%[^\n]%*c", user.user_type);
 
             write(sockfd, &user, sizeof(user));
             read(sockfd, msg, sizeof(msg));
@@ -367,6 +369,7 @@ void send_request_to_server(int sockfd, int query_num, int user_id, char user_ty
 
             struct user_info user;
             user.user_id = user_id;
+            strcpy(user.user_type, user_type);
 
             printf("Please enter the new user details:\n");
             printf("Username: ");

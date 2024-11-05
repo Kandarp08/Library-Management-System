@@ -55,7 +55,7 @@ void setup(struct file_fd *file_fds, char user_type[])
 
     else
     {
-        file_fds->user_info_fd = open("./data/user_info.dat", O_RDONLY);
+        file_fds->user_info_fd = open("./data/user_info.dat", O_RDWR);
         file_fds->book_info_fd = open("./data/book_info.dat", O_RDONLY);
         file_fds->transactions_fd = open("./data/transactions.dat", O_RDONLY);
     }
@@ -101,14 +101,14 @@ void serve_client(char *argv[])
 
 int main()
 {
-    init();
+    //init();
 
     int sockfd = socket(AF_INET, SOCK_STREAM, 0);
 
     struct sockaddr_in server_addr, client_addr;
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(8080);
+    server_addr.sin_port = htons(8000);
 
     int res = bind(sockfd, (struct sockaddr *)&server_addr, sizeof(server_addr));
 
