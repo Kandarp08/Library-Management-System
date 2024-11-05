@@ -4,7 +4,7 @@ Some features of this project are:
 
 1. Modular - The source code is broken down into various modules, and each module is implemented in a separate file.
 
-2. Scalable - It is very easy to add more functionalities, both on the server as well as the client side.
+2. Extensible - It is very easy to add more functionalities, both on the server as well as the client side.
 
 The project contains the following directories:
 
