@@ -5,6 +5,7 @@
 #include <fcntl.h>
 
 #include "../include/manage_users.h"
+#include "../include/manage_transactions.h"
 
 int authenticate_user(int user_info_fd, struct user_info *client_info)
 {
@@ -68,7 +69,7 @@ int add_user(int user_info_fd, struct user_info *client_info)
         if (user.user_id == -1)
             continue;
 
-        if (!strcpy(user.username, client_info->username) && !strcpy(user.user_type, client_info->user_type))
+        if (!strcmp(user.username, client_info->username))
             return 1; 
     }
 
@@ -93,7 +94,7 @@ int add_user(int user_info_fd, struct user_info *client_info)
     fcntl(user_info_fd, F_SETLK, &lock);
 }
 
-int remove_user(int user_info_fd, int user_id)
+int remove_user(int user_info_fd, int user_id, int transactions_fd)
 {
     if (user_id == 1)
         return 2;
@@ -123,6 +124,16 @@ int remove_user(int user_info_fd, int user_id)
 
         if (user.user_id == user_id)
         {
+            int has_borrowed = has_borrowed_book(transactions_fd, user_id);
+
+            if (has_borrowed)
+            {
+                lock.l_type = F_UNLCK;
+                fcntl(user_info_fd, F_SETLKW, &lock);
+
+                return 3;
+            }
+
             lseek(user_info_fd, -sizeof(user), SEEK_CUR);
             
             lock.l_type = F_WRLCK;

@@ -5,6 +5,7 @@
 #include <ctype.h>
 
 #include "../include/manage_books.h"
+#include "../include/manage_transactions.h"
 
 void add_book(int book_info_fd, struct book_info *book)
 {
@@ -34,7 +35,7 @@ void add_book(int book_info_fd, struct book_info *book)
     fcntl(book_info_fd, F_SETLKW, &lock);
 }
 
-int remove_book(int book_info_fd, int book_id)
+int remove_book(int book_info_fd, int book_id, int transactions_fd)
 {
     struct flock lock;
     lock.l_type = F_RDLCK;
@@ -58,6 +59,16 @@ int remove_book(int book_info_fd, int book_id)
 
         if (book_details.book_id == book_id)
         {
+            int is_borrowed = is_book_borrowed(transactions_fd, book_id);
+
+            if (is_borrowed)
+            {
+                lock.l_type = F_UNLCK;
+                fcntl(book_info_fd, F_SETLKW, &lock);
+
+                return 2;
+            }
+
             lseek(book_info_fd, -sizeof(book_details), SEEK_CUR);
 
             lock.l_type = F_WRLCK;

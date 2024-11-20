@@ -13,7 +13,7 @@ int authenticate_user(int user_info_fd, struct user_info *client_info);
 
 int add_user(int user_info_fd, struct user_info *client_info);
 
-int remove_user(int user_info_fd, int user_id);
+int remove_user(int user_info_fd, int user_id, int transactions_fd);
 
 int modify_user(int user_info_fd, struct user_info *client_info);
 

@@ -12,3 +12,7 @@ int return_book(int book_info_fd, int transactions_fd, int book_id, int user_id)
 void show_user_transactions(int transactions_fd, int sockfd, int user_id);
 
 void show_books_to_be_returned(int transactions_fd, int sockfd);
+
+int is_book_borrowed(int transactions_fd, int book_id);
+
+int has_borrowed_book(int transactionss_fd, int user_id);

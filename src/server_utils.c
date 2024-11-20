@@ -29,13 +29,16 @@ void serve_client_request(int sockfd, struct file_fd *file_fds, int query_num)
         int book_id;
         read(sockfd, &book_id, sizeof(int));
 
-        int res = remove_book(file_fds->book_info_fd, book_id);
+        int res = remove_book(file_fds->book_info_fd, book_id, file_fds->transactions_fd);
 
         if (res == 0)
             strcpy(msg, "Book removed successfully.");
 
-        else
+        else if (res == 1)
             strcpy(msg, "Book not found.");
+
+        else if (res == 2)
+            strcpy(msg, "Cannot remove book. Some copies are currently borrowed.");
 
         write(sockfd, msg, sizeof(msg));
     }
@@ -67,7 +70,7 @@ void serve_client_request(int sockfd, struct file_fd *file_fds, int query_num)
             strcpy(msg, "User registered successfully.");
         
         else
-            strcpy(msg, "User already exists with given username and user type.");
+            strcpy(msg, "User already exists with given username.");
         
         write(sockfd, msg, sizeof(msg));
     }
@@ -77,13 +80,16 @@ void serve_client_request(int sockfd, struct file_fd *file_fds, int query_num)
         int user_id;
         read(sockfd, &user_id, sizeof(int));
 
-        int res = remove_user(file_fds->user_info_fd, user_id);
+        int res = remove_user(file_fds->user_info_fd, user_id, file_fds->transactions_fd);
 
         if (res == 0)
             strcpy(msg, "User removed successfully.");
 
         else if (res == 1)
             strcpy(msg, "User not found.");
+
+        else if (res == 3)
+            strcpy(msg, "Cannot remove user. User has currently borrowed some books.");
 
         else
             strcpy(msg, "Main admin cannot be deleted.");

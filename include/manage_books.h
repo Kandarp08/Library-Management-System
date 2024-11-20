@@ -9,7 +9,7 @@ struct book_info
 
 void add_book(int book_info_fd, struct book_info *book);
 
-int remove_book(int book_info_fd, int book_id);
+int remove_book(int book_info_fd, int book_id, int transactions_fd);
 
 int modify_book(int book_info_fd, struct book_info *book);
 
