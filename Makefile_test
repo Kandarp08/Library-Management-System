@@ -1,0 +1,27 @@
+IDIR=./include
+CC=gcc
+CFLAGS=-I$(IDIR)
+
+ODIR=./obj
+
+
+
+_TEST_DEPS = manage_users.h manage_books.h manage_transactions.h server_utils.h client_utils.h
+TEST_DEPS = $(patsubst %,$(IDIR)/%,$(_TEST_DEPS))
+
+_TEST_OBJ = manage_users.o manage_books.o manage_transactions.o server_utils.o testuserfuncs.o
+TEST_OBJ = $(patsubst %,$(ODIR)/%,$(_TEST_OBJ))
+
+$(ODIR)/%.o: ./src/%.c $(TEST_DEPS) -lcunit
+		$(CC) -c -o $@ $< $(CFLAGS) -lcunit
+
+$(ODIR)/testuserfuncs.o: ./testing/testuserfuncs.c $(TEST_DEPS) -lcunit
+		$(CC) -c -o $@ $< $(CFLAGS) -lcunit
+
+test: $(TEST_OBJ)
+	$(CC) -o $@ $^ $(CFLAGS) -lcunit
+
+
+
+
+
