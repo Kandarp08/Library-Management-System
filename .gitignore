@@ -1,4 +1,7 @@
 server
 client
+test_users
+test_books
+test_transactions
 
 obj/

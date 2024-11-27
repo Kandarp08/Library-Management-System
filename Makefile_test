@@ -18,7 +18,7 @@ $(ODIR)/%.o: ./src/%.c $(TEST_DEPS) -lcunit
 $(ODIR)/testuserfuncs.o: ./testing/testuserfuncs.c $(TEST_DEPS) -lcunit
 		$(CC) -c -o $@ $< $(CFLAGS) -lcunit
 
-test: $(TEST_OBJ)
+test_users: $(TEST_OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) -lcunit
 
 
