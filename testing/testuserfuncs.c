@@ -13,8 +13,8 @@ int my_init_function();
 
 void test_admin_present()
 { // test if after init the main admin is present or not
-	//init done before this test already
-	// my_init_function()
+	// init done before this test already
+	//  my_init_function()
 	int fd = open("./data/user_info.dat", O_RDWR);
 	struct user_info clientinfo;
 	// clientinfo.user_id = 1;
@@ -28,8 +28,8 @@ void test_admin_present()
 }
 
 void test_add_remove_user()
-{ //
-	my_init_function(); //reinit everything for the new test
+{						//
+	my_init_function(); // reinit everything for the new test
 	int user_fd = open("./data/user_info.dat", O_RDWR);
 	int transactions_fd = open("./data/transactions.dat", O_RDWR);
 	struct user_info newuser;
@@ -37,7 +37,6 @@ void test_add_remove_user()
 	strcpy(newuser.password, "new_pass");
 	strcpy(newuser.user_type, "member");
 	int ret = add_user(user_fd, &newuser);
-	printf("ret is %d\n", ret);
 	CU_ASSERT_EQUAL(add_user(user_fd, &newuser), 1);
 	// we know that in this scenario, the userid will be 2
 	int user_id = 2;
@@ -53,7 +52,6 @@ void test_add_remove_user()
 void test_show_all_users()
 {
 	my_init_function(); // reinitialize everything
-	printf("started to show all users\n");
 	int user_fd = open("./data/user_info.dat", O_RDWR);
 	int pipearr[2];
 	pipe(pipearr);
@@ -69,13 +67,14 @@ void test_show_all_users()
 	read(pipein, &user, sizeof(struct user_info));
 
 	CU_ASSERT_EQUAL(user.user_id, 1); // first id must be 1
-	read(pipein, &user, sizeof(struct user_info)); 
+	read(pipein, &user, sizeof(struct user_info));
 	CU_ASSERT_EQUAL(user.user_id, 2); // 2nd id must be 2
 	read(pipein, &user, sizeof(struct user_info));
 	CU_ASSERT_EQUAL(user.user_id, -1);
 }
 
-void test_modify_user(){
+void test_modify_user()
+{
 	my_init_function();
 	int user_fd = open("./data/user_info.dat", O_RDWR);
 	struct user_info newuser;
@@ -132,7 +131,7 @@ int my_init_function()
 	close(user_info_fd);
 	close(book_info_fd);
 
-	printf("init done\n");
+	// printf("init done\n");
 	return 0;
 }
 
@@ -167,5 +166,6 @@ int main()
 
 	CU_basic_run_tests();
 	CU_cleanup_registry();
+	printf("user tests done\n");
 	return 0;
 }
