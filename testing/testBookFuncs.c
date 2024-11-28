@@ -113,13 +113,22 @@ int my_init_function()
     // printf("my_init_function completed\n");
     return 0;
 }
-
+int my_cleanup_function(){
+    int fd = open("./data/book_info.dat", O_WRONLY | O_TRUNC, 0644);
+    if( fd == -1 ) return 1;
+    //write a 1 b4 closing
+    int val=1;
+    write(fd,&val,sizeof(int));
+    close(fd);
+    return 0;
+}
 
 int main()
 {
     CU_initialize_registry();
     CU_InitializeFunc pInit = my_init_function;
-    CU_pSuite suite = CU_add_suite("book management suite",pInit,NULL);
+    CU_CleanupFunc pClean = my_cleanup_function;
+    CU_pSuite suite = CU_add_suite("book management suite",pInit,pClean);
     CU_add_test(suite, "test find book", test_find_book);
     CU_add_test(suite, "test add book", test_add_book);
     
