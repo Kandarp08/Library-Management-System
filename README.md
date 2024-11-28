@@ -47,3 +47,5 @@ Unit tests for the LMS are written using CUnit. After setting up the LMS, it can
 4. To run the respective tests, use the commands
 
     ```./test_users```, ```./test_books```, and ```./test_transactions``` in the root directory of the project.
+
+5. Please note that running the tests erases all data inside the files.
