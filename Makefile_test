@@ -1,41 +1,10 @@
-# IDIR=./include
-# CC=gcc
-# CFLAGS=-I$(IDIR)
-
-# ODIR=./obj
-
-
-
-# _TEST_DEPS = manage_users.h manage_books.h manage_transactions.h server_utils.h client_utils.h
-# TEST_DEPS = $(patsubst %,$(IDIR)/%,$(_TEST_DEPS))
-
-# _TEST_OBJ = manage_users.o manage_books.o manage_transactions.o server_utils.o testuserfuncs.o
-# TEST_OBJ = $(patsubst %,$(ODIR)/%,$(_TEST_OBJ))
-
-# _TEST_OBJ1 = manage_users.o manage_books.o manage_transactions.o server_utils.o testbookfuncs.o
-# TEST_OBJ1 = $(patsubst %,$(ODIR)/%,$(_TEST_OBJ1))
-
-# $(ODIR)/%.o: ./src/%.c $(TEST_DEPS) -lcunit
-# 		$(CC) -c -o $@ $< $(CFLAGS) -lcunit
-
-# $(ODIR)/testuserfuncs.o: ./testing/testuserfuncs.c $(TEST_DEPS) -lcunit
-# 		$(CC) -c -o $@ $< $(CFLAGS) -lcunit
-
-# $(ODIR)/testbookfuncs.o: ./testing/testBookFuncs.c $(TEST_DEPS)
-# 	$(CC) -c -o $@ $< $(CFLAGS)
-
-# test_users: $(TEST_OBJ)
-# 	$(CC) -o $@ $^ $(CFLAGS) -lcunit
-
-# test_books: $(TEST_OBJ1)
-# 	$(CC) -o $@ $^ $(CFLAGS) -lcunit
-
-
 IDIR=./include
 CC=gcc
 CFLAGS=-I$(IDIR)
 
 ODIR=./obj
+
+
 
 _TEST_DEPS = manage_users.h manage_books.h manage_transactions.h server_utils.h client_utils.h
 TEST_DEPS = $(patsubst %,$(IDIR)/%,$(_TEST_DEPS))
@@ -46,34 +15,26 @@ TEST_OBJ = $(patsubst %,$(ODIR)/%,$(_TEST_OBJ))
 _TEST_OBJ1 = manage_users.o manage_books.o manage_transactions.o server_utils.o testbookfuncs.o
 TEST_OBJ1 = $(patsubst %,$(ODIR)/%,$(_TEST_OBJ1))
 
-# Rule for building all object files in $(ODIR)
-$(ODIR)/%.o: ./src/%.c $(TEST_DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS)
+_TEST_OBJ2 = manage_users.o manage_books.o manage_transactions.o server_utils.o testTransactions.o
+TEST_OBJ2 = $(patsubst %,$(ODIR)/%,$(_TEST_OBJ2))
 
-# Explicit rule for testuserfuncs
-$(ODIR)/testuserfuncs.o: ./testing/testuserfuncs.c $(TEST_DEPS)
-	$(CC) -c -o $@ $< $(CFLAGS) -lcunit
+$(ODIR)/%.o: ./src/%.c $(TEST_DEPS) -lcunit
+		$(CC) -c -o $@ $< $(CFLAGS) -lcunit
 
-# Explicit rule for testbookfuncs
+$(ODIR)/testuserfuncs.o: ./testing/testuserfuncs.c $(TEST_DEPS) -lcunit
+		$(CC) -c -o $@ $< $(CFLAGS) -lcunit
+
 $(ODIR)/testbookfuncs.o: ./testing/testBookFuncs.c $(TEST_DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
+	
+$(ODIR)/testTransactions.o: ./testing/testTransactions.c $(TEST_DEPS) -lcunit
+		$(CC) -c -o $@ $< $(CFLAGS) -lcunit
 
-# Target for test_users
 test_users: $(TEST_OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) -lcunit
 
-# Target for test_books
 test_books: $(TEST_OBJ1)
 	$(CC) -o $@ $^ $(CFLAGS) -lcunit
 
-# Ensure object directory exists before building
-$(ODIR):
-	mkdir -p $(ODIR)
-
-# Add dependency for $(ODIR) to object file rules
-$(ODIR)/%.o: | $(ODIR)
-
-# .PHONY: clean
-# clean:
-# 	rm -rf $(ODIR)/*.o test_users test_books
-
+test_transactions: $(TEST_OBJ2)
+	$(CC) -o $@ $^ $(CFLAGS) -lcunit
