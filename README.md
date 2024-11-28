@@ -34,22 +34,6 @@ To setup and test the LMS locally, follow these instructions:
 
 5. You should see a list of features that are available to the admin. Add new admins or members using the feature "<b>Add new user</b>". These users can now use the application by logging in through their respective credentials.
 
-6. If at any time a complete reset of the system is required, then do the following:
-
-    a. Uncomment the <i>init()</i> function on line 104 of <i>src/server.c</i>. 
-
-    b. Delete the existing .dat files in the <b>data</b> directory.
-
-    c. Go to the <b>data</b> directory and run the command ```touch user_info.dat book_info.dat transactions.dat``` to create data files.
-
-    d. Compile and run the server code using ```make server``` and ```./server```, respectively.
-
-    e. You should see a message displaying that the initialization was successful.
-
-    f. Comment the <i>init()</i> function inside <i>src/server.c</i>. Run ```make server``` again.
-
-    g. The system is now reset.
-
 <h2>Testing Instructions</h2>
 
 Unit tests for the LMS are written using CUnit. After setting up the LMS, it can be unit tested in the following manner:
