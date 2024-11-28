@@ -1,3 +1,5 @@
+This file contains basic information about the CUnit framework and the installation instructions.
+
 test case: It is a sequence of actions necessary to verify a specific functionality or feature of the software. It specifies the prerequisites, post conditions, steps, and data required for feature verification.
 
 For instance, in a test scenario where you have to check login functionality, one of the test cases can be:
