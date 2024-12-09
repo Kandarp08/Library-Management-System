@@ -1,4 +1,4 @@
-The Library Management System(LMS) is a terminal application that can be used for the management of a library. It contains various features to handle users, books, and their transactions. 
+The Library Management System (LMS) is a terminal application that can be used for the management of a library. It contains various features to handle users, books, and their transactions. 
 
 <h2>File Structure</h2>
 
@@ -48,4 +48,11 @@ Unit tests for the LMS are written using CUnit. After setting up the LMS, it can
 
     ```./test_users```, ```./test_books```, and ```./test_transactions``` in the root directory of the project.
 
-5. Please note that running the tests erases all data inside the files.
+5. Please note that running the tests erases all data inside the files, except the initial base data.
+
+<h2>Team Members (Team 6)</h2>
+
+1. Prateek Rath (IMT2022017)
+2. Areen Vaghasiya (IMT2022048)
+3. Rudra Pathak (IMT2022081)
+4. Kandarp Dave (IMT2022115)
