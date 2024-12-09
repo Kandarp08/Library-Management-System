@@ -81,8 +81,6 @@ void test_modify_user()
 	strcpy(newuser.username, "new_user");
 	strcpy(newuser.password, "new_pass");
 	strcpy(newuser.user_type, "member");
-	int ret = add_user(user_fd, &newuser);
-	printf("ret is %d\n", ret);
 	CU_ASSERT_EQUAL(add_user(user_fd, &newuser), 0);
 	strcpy(newuser.username, "pratster");
 	CU_ASSERT_EQUAL(modify_user(user_fd, &newuser), 0);
@@ -90,9 +88,13 @@ void test_modify_user()
 	pipe(pipearr);
 	int pipein = pipearr[0];  // read end
 	int pipeout = pipearr[1]; // write end
+	
+	show_all_users(pipeout, user_fd);
+	
 	struct user_info user;
 	read(pipein, &user, sizeof(struct user_info));
 	read(pipein, &user, sizeof(struct user_info));
+
 	CU_ASSERT_EQUAL(strcmp(user.username, "pratster"), 0);
 	close(user_fd);
 }
@@ -154,7 +156,7 @@ int main()
 	CU_pTest test11 = CU_add_test(suite1, "admin_present", test_admin_present);
 	CU_pTest test12 = CU_add_test(suite1, "add_remove_user", test_add_remove_user);
 	CU_pTest test13 = CU_add_test(suite1, "show_all_users", test_show_all_users);
-	CU_pTest test14 = CU_add_test(suite1, "modify_user", test_show_all_users);
+	CU_pTest test14 = CU_add_test(suite1, "modify_user", test_modify_user);
 
 	// Creates a new test having the specified name and test function, and registers it with the specified suite.
 	// The suite must already have been created using CU_add_suite().
